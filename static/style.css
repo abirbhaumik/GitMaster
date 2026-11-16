@@ -1,0 +1,42 @@
+:root {
+  --bg: #fbfaf7; --fg: #1d1f23; --muted: #646a73; --line: #e4e1da;
+  --accent: #1f5f8b; --card: #ffffff; --tag: #eef3f7;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #14161a; --fg: #e6e6e3; --muted: #9aa0a8; --line: #2a2e35;
+          --accent: #7cb7e0; --card: #1b1e23; --tag: #22303b; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 18px/1.65 Georgia, "Iowan Old Style", serif; }
+header.site, main, footer { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+header.site { display: flex; justify-content: space-between; align-items: center;
+  padding-top: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line);
+  font-family: system-ui, sans-serif; font-size: 15px; }
+.brand { font-weight: 700; color: var(--fg); text-decoration: none; }
+nav a { margin-left: 16px; color: var(--muted); text-decoration: none; }
+a { color: var(--accent); }
+.hero { padding: 40px 0 8px; }
+.hero h1 { margin: 0 0 6px; font-size: 34px; line-height: 1.2; }
+.hero p { margin: 0; color: var(--muted); }
+.posts { list-style: none; padding: 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 18px 22px; margin: 18px 0; }
+.card h2 { margin: 4px 0 6px; font-size: 22px; line-height: 1.3; }
+.card h2 a { color: var(--fg); text-decoration: none; }
+.card h2 a:hover { color: var(--accent); }
+.card p { margin: 0; }
+.meta { font: 13px system-ui, sans-serif; color: var(--muted); margin: 0; }
+.tag { display: inline-block; background: var(--tag); color: var(--accent);
+  border-radius: 99px; padding: 1px 9px; margin-left: 6px; font-size: 12px; }
+article { padding: 32px 0 8px; }
+article h1 { font-size: 32px; line-height: 1.2; margin: 8px 0 20px; }
+article h2 { font-size: 23px; margin-top: 34px; }
+article h3 { font-size: 19px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--tag); }
+code { font-size: 15px; }
+.pager { display: flex; justify-content: space-between; gap: 16px; padding: 20px 0;
+  border-top: 1px solid var(--line); font: 14px system-ui, sans-serif; }
+footer { color: var(--muted); font: 13px system-ui, sans-serif; padding-top: 30px; padding-bottom: 40px; }

@@ -1,0 +1,70 @@
+name: Publish blog
+
+on:
+  schedule:
+    # Runs daily; the script only publishes when the last post is >= 2 days old.
+    # (A plain "*/2" day-of-month cron would break the rhythm at month ends.)
+    - cron: "17 6 * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Publish a new post now, regardless of the 2-day interval"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Generate new post if due
+        if: github.event_name != 'push'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_post.py ${{ inputs.force && '--force' || '' }}
+
+      - name: Commit new post
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "blog-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add posts queue
+          if git diff --cached --quiet; then
+            echo "No new post."
+          else
+            git commit -m "New post: $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Build site
+        env:
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: python scripts/build.py
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
