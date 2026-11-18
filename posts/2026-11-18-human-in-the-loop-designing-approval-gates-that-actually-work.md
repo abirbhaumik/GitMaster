@@ -1,5 +1,6 @@
 ---
 title: "Human-in-the-Loop: Designing Approval Gates That Actually Work"
+date: 2026-11-18
 summary: "Approval prompts only protect you if people read them. How to place, design and measure human checkpoints in agent workflows."
 tags: human oversight, controls
 ---
