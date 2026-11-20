@@ -1,5 +1,6 @@
 ---
 title: "Building an Agent Inventory and Risk Register"
+date: 2026-11-20
 summary: "A practical template for cataloguing the agents in your organization and recording their risks, owners and controls."
 tags: governance, inventory, risk register
 ---
